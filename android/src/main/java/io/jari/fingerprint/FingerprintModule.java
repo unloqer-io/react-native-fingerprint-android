@@ -143,11 +143,11 @@ public class FingerprintModule extends ReactContextBaseJavaModule {
             if(errorCode == FINGERPRINT_ERROR_CANCELED) {
                 isCancelled = true;
             }
-            if(promise == null) {
-                throw new AssertionError("Tried to reject the auth promise, but it was already resolved / rejected. This shouldn't happen.");
+            if(promise != null) {
+                promise.reject(Integer.toString(errorCode), errString.toString());
+                promise = null;
             }
-            promise.reject(Integer.toString(errorCode), errString.toString());
-            promise = null;
+            
         }
 
         @Override
